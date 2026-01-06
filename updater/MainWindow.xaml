@@ -1,0 +1,27 @@
+﻿<Window x:Class="updater.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:updater"
+        mc:Ignorable="d"
+        Title="Media Player Updater" Height="249" Width="450"
+        WindowState="Minimized"
+        ResizeMode="NoResize" Visibility="Visible">
+    <Viewbox Stretch="UniformToFill">
+        <Grid Height="265">
+            <StackPanel x:Name="title_panel" Orientation="Horizontal" Margin="0,0,0,226">
+                <Image Source="/media_player.ico" Height="39"/>
+                <TextBlock x:Name="title_box" Margin="70, 0" FontFamily="Arial" FontWeight="Black" FontSize="20" Height="22">Media Player Updater</TextBlock>
+            </StackPanel>
+            <TextBlock x:Name="error_box" FontFamily="Arial" FontWeight="Black" TextWrapping="Wrap" Visibility="Hidden" Foreground="Red" Margin="0,39,0,195">Cannot fetch latest release. Please check if you are connected to the internet!</TextBlock>
+            <TextBlock x:Name="current_version_box" FontFamily="Arial" FontSize="18" FontWeight="Black" Margin="10,75,6,169" >Current version: ?.?.?</TextBlock>
+            <TextBlock x:Name="latest_version_box" FontFamily="Arial" FontSize="19.5" FontWeight="Black" Margin="10,96,6,146">Latest version: ?.?.?</TextBlock>
+            <TextBlock FontFamily="Arial" FontSize="14" FontWeight="Black" Margin="0,220,0,20" >Changelog:</TextBlock>
+            <Button x:Name="open_changelog_btn" FontSize="14" FontWeight="Bold" Background="Blue" Foreground="White" Click="open_changelog_btn_Click" Margin="92,217,292,23">View changelog</Button>
+
+            <Button x:Name="update_btn" FontFamily="Arial" IsEnabled="False" FontWeight="Black" Background="LimeGreen" Click="update_btn_Click" Margin="10,132,16,99">Update</Button>
+            <Button x:Name="skip_btn" FontFamily="Arial" FontWeight="Black" Background="Yellow" Click="skip_btn_Click" Margin="10,171,16,57">Skip version</Button>
+        </Grid>
+    </Viewbox>
+</Window>
