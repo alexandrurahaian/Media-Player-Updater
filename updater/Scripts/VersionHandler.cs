@@ -17,7 +17,6 @@ namespace updater.Scripts
 {
     public static class VersionHandler
     {
-        private static string? GITHUB_TOKEN = Environment.GetEnvironmentVariable("MP-UPDATER-API-TOKEN");
         private static readonly string? CURRENT_APP_VERSION = GetCurrentVersion();
         private static MainWindow mainWindow;
 
@@ -30,13 +29,7 @@ namespace updater.Scripts
         {
             try
             {
-                if (string.IsNullOrEmpty(GITHUB_TOKEN))
-                {
-                    throw new Exception("Github API Token is not set!");
-                }
                 client.DefaultRequestHeaders.Add("User-Agent", "Media Player Application");
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("token", GITHUB_TOKEN);
                 mainWindow = mw;
             }
             catch (Exception ex)
