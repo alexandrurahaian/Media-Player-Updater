@@ -29,7 +29,7 @@ namespace updater.Scripts
         {
             try
             {
-                client.DefaultRequestHeaders.Add("User-Agent", "Media Player Application");
+                client.DefaultRequestHeaders.Add("User-Agent", "Youtube Downloader Application");
                 mainWindow = mw;
             }
             catch (Exception ex)
@@ -38,43 +38,15 @@ namespace updater.Scripts
             }
         }
 
-        private static bool MakeBackup()
-        {
-            int randId = new Random().Next(999999);
-            string dataFile = Path.Combine(AppContext.BaseDirectory, "media.db");
-            string backupFolder = Path.Combine(AppContext.BaseDirectory, "Backups");
-            string dataBakFile = Path.Combine(backupFolder, $"bak_media-{randId}.db");
-            
-            try
-            {
-                if (!Directory.Exists(backupFolder)) Directory.CreateDirectory(backupFolder);
-                File.Copy(dataFile, dataBakFile, false);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Could not create backup: {ex.Message}\n{ex.StackTrace}\n{ex.InnerException}");
-                return false;
-            }
-        }
-
         private static async void DownloadUpdate()
         {
-            string download_url = "https://github.com/vortex3225/media_player/releases/latest/download/media_player.zip";
-            string fileToWrite = Path.Combine(AppContext.BaseDirectory, "media_player.zip");
-            string newFolder = Path.Combine(AppContext.BaseDirectory, "media_temp");
+            string download_url = "https://github.com/alexandrurahaian/Youtube-Downloader/releases/latest/download/youtube_downloader_win64.zip ";
+            string fileToWrite = Path.Combine(AppContext.BaseDirectory, "youtube_downloader_win64.zip");
+            string newFolder = Path.Combine(AppContext.BaseDirectory, "yt_dwldrNew");
             string tempOldFolder = Path.Combine(AppContext.BaseDirectory, "Old");
 
             try
             {
-                bool couldMakeBak = MakeBackup();
-                if (!couldMakeBak)
-                {
-                    MessageBox.Show($"Updating cancelled. Could not make data backup...");
-                    Environment.Exit(0);
-                    return;
-                }
-
                 if (Directory.Exists(tempOldFolder))
                 {
                     Directory.Delete(tempOldFolder, true);
@@ -97,7 +69,7 @@ namespace updater.Scripts
                                               .ToArray();
                 string[] old_files = Directory.GetFiles(AppContext.BaseDirectory);
 
-                string[] persistent_files = { "media.db", "Backups", "auto_update.cfg", "updater.exe", "app_config.json" };
+                string[] persistent_files = { "updater.exe"};
 
                 Debug.WriteLine("Old files: ");
                 foreach (string filePath in old_files)
@@ -126,7 +98,7 @@ namespace updater.Scripts
                     File.Copy(filePath, Path.Combine(AppContext.BaseDirectory, fileName), true);
                 }
                 Process media_player_proc = new Process();
-                media_player_proc.StartInfo.FileName = Path.Combine(AppContext.BaseDirectory, "Media Player.exe");
+                media_player_proc.StartInfo.FileName = Path.Combine(AppContext.BaseDirectory, "Youtube Downloader.exe");
                 media_player_proc.Start();
                 Directory.Delete(newFolder, true);
                 Directory.Delete(tempOldFolder, true);
@@ -157,7 +129,7 @@ namespace updater.Scripts
         public static async Task<string> GetLatestVersion()
         {
             var response = await client.GetStringAsync(
-                              "https://api.github.com/repos/vortex3225/media_player/releases/latest"
+                              "https://api.github.com/repos/vortex3225/Youtube-Downloader/releases/latest"
                           );
             var json = JsonNode.Parse(response);
             var tag = json?["tag_name"]?.ToString();
@@ -168,7 +140,7 @@ namespace updater.Scripts
 
         public static string? GetCurrentVersion()
         {
-            string? version = FileVersionInfo.GetVersionInfo(Path.Combine(AppContext.BaseDirectory, "Media Player.exe")).FileVersion;
+            string? version = FileVersionInfo.GetVersionInfo(Path.Combine(AppContext.BaseDirectory, "Youtube Downloader.exe")).FileVersion;
             return version;
         }
 
@@ -192,7 +164,7 @@ namespace updater.Scripts
                 {
                     // run media player exe
                     Process m_proc = new Process();
-                    m_proc.StartInfo.FileName = Path.Combine(AppContext.BaseDirectory, "Media Player.exe");
+                    m_proc.StartInfo.FileName = Path.Combine(AppContext.BaseDirectory, "Youtube Downloader.exe");
                     m_proc.Start();
                     Environment.Exit(0);
                 }
